@@ -1,0 +1,65 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.2'
+	id 'io.spring.dependency-management' version '1.1.6'
+	
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	set('springCloudVersion', "2023.0.3")
+}
+
+dependencies {
+
+	// JSON Web Token (JWT) Dependencies
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'       // JJWT API for JWT handling
+	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'      // Implementation of JJWT
+	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'   // Use Jackson for JSON serialization with JJWT
+
+	// MySQL JDBC Driver for database connections
+	implementation 'mysql:mysql-connector-java:8.0.32'
+
+	// Jakarta XML Binding (JAXB) Dependencies
+	implementation 'jakarta.xml.bind:jakarta.xml.bind-api:3.0.1'  // JAXB API under Jakarta
+	implementation 'org.glassfish.jaxb:jaxb-runtime:3.0.2'       // JAXB runtime
+
+	// Spring Boot Starters for various functionalities
+	implementation 'org.springframework.boot:spring-boot-starter-amqp'      // Messaging with RabbitMQ
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc' // JDBC support
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'  // JPA and Hibernate support
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client' // OAuth2 client
+	implementation 'org.springframework.boot:spring-boot-starter-security'  // Spring Security
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf' // Thymeleaf template engine
+	implementation 'org.springframework.boot:spring-boot-starter-web'       // Spring MVC and REST
+
+
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
+	// Testing Dependencies
+	testImplementation 'org.springframework.boot:spring-boot-starter-test' // Testing support
+	testImplementation 'org.springframework.security:spring-security-test' // Security testing support
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher' // JUnit platform launcher for testing
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}" // Spring Cloud BOM
+	}
+}
+
+tasks.named('test') {
+	useJUnitPlatform() // Use JUnit platform for running tests
+}
